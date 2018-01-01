@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN" "http://mybatis.org/dtd/mybatis-3-config.dtd">
+
+<configuration>
+
+    <settings>
+        <setting name="logImpl" value="STDOUT_LOGGING" />
+        <!-- mybatis缓存设置 -->
+        <setting name="cacheEnabled" value="true"/>
+
+        <!--延迟加载的全局开关-->
+        <setting name="lazyLoadingEnabled" value="false"/>
+
+        <!--设置一个时限，以决定让驱动器等待数据库回应的多长时间为超时-->
+        <setting name="defaultStatementTimeout" value="3000"/>
+        <!--本地缓存机制：
+        	MyBatis 利用本地缓存机制（Local Cache）防止循环引用（circular references）和加速重复嵌套查询。
+        	默认值为 SESSION，这种情况下会缓存一个会话中执行的所有查询。 若设置值为 STATEMENT，
+        	本地会话仅用在语句执行上，对相同 SqlSession 的不同调用将不会共享数据
+        -->
+        <setting name="localCacheScope" value="STATEMENT"/>
+        <!--
+        配置默认的执行器。SIMPLE 就是普通的执行器；
+        REUSE 执行器会重用预处理语句（prepared statements）；
+        BATCH 执行器将重用语句并执行批量更新
+        -->
+        <setting name="defaultExecutorType" value="SIMPLE"/>
+        <!--
+        是否开启自动驼峰命名规则（camel case）映射，
+        即从经典数据库列名 A_COLUMN 到经典 Java 属性名 aColumn 的类似映射。
+        -->
+        <setting name="mapUnderscoreToCamelCase" value="true"/>
+
+        <!--
+        允许JDBC支持自动生成主键:
+        允许 JDBC 支持自动生成主键，需要驱动兼容。
+        如果设置为 true 则这个设置强制使用自动生成主键，
+        尽管一些驱动不能兼容但仍可正常工作（比如 Derby）。
+        -->
+        <setting name="useGeneratedKeys" value="true"/>
+
+    </settings>
+
+    <typeAliases>
+    </typeAliases>
+
+    <!--mybatis的全局配置文件中配置PageHelper插件-->
+    <plugins>
+        <!-- com.github.pagehelper为PageHelper类所在包名 -->
+        <plugin interceptor="com.github.pagehelper.PageInterceptor">
+            <!-- 使用下面的方式配置参数，后面会有所有的参数介绍 -->
+            <property name="param1" value="value1"/>
+        </plugin>
+    </plugins>
+</configuration>

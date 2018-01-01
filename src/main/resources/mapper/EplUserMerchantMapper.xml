@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.plc.gjw.user.dao.EplUserMerchantDao">
+  <resultMap id="UserMerchantMap" type="com.plc.gjw.domain.EplUserMerchant">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="user_account" jdbcType="VARCHAR" property="userAccount" />
+    <result column="user_type" jdbcType="VARCHAR" property="userType" />
+    <result column="user_password" jdbcType="VARCHAR" property="userPassword" />
+    <result column="real_name" jdbcType="VARCHAR" property="realName" />
+    <result column="passwd_effect_time" jdbcType="TIMESTAMP" property="passwdEffectTime" />
+    <result column="passwd_expire_time" jdbcType="TIMESTAMP" property="passwdExpireTime" />
+    <result column="passwd_modify_time" jdbcType="TIMESTAMP" property="passwdModifyTime" />
+    <result column="relogin_flag" jdbcType="VARCHAR" property="reloginFlag" />
+    <result column="relogin_count" jdbcType="VARCHAR" property="reloginCount" />
+    <result column="last_login_error_time" jdbcType="TIMESTAMP" property="lastLoginErrorTime" />
+    <result column="password_modify_cycle" jdbcType="INTEGER" property="passwordModifyCycle" />
+    <result column="org_code" jdbcType="VARCHAR" property="orgCode" />
+    <result column="status" jdbcType="VARCHAR" property="status" />
+    <result column="parent_id" jdbcType="BIGINT" property="parentId" />
+    <result column="create_operator" jdbcType="VARCHAR" property="createOperator" />
+    <result column="merchent_id" jdbcType="BIGINT" property="merchentId" />
+    <result column="alias" jdbcType="VARCHAR" property="alias" />
+    <result column="created_date" jdbcType="TIMESTAMP" property="createdDate" />
+    <result column="modified_date" jdbcType="TIMESTAMP" property="modifiedDate" />
+    <!--商户信息-->
+    <result column="merchant_name" jdbcType="VARCHAR" property="merchantName" />
+    <result column="merchant_identify" jdbcType="VARCHAR" property="merchantIdentify" />
+    <result column="phone" jdbcType="VARCHAR" property="phone" />
+    <result column="address" jdbcType="VARCHAR" property="address" />
+    <result column="channel_id" jdbcType="BIGINT" property="channelId" />
+    <result column="type_id" jdbcType="BIGINT" property="typeId" />
+  </resultMap>
+
+  <sql id="user_merchant_column_list">
+    u.id, user_account, user_type, user_password, real_name, passwd_effect_time, passwd_expire_time,
+    passwd_modify_time, relogin_flag, relogin_count, last_login_error_time, password_modify_cycle,
+    org_code, status, parent_id, u.operator,u.operator_id, merchent_id, alias, u.created_date, u.modified_date,
+    merchant_name,merchant_identify,phone,address,channel_id,type_id
+  </sql>
+  <!--查询用户及用户所属商户信息-->
+  <select id="selectByUserAccount" parameterType="java.util.Map" resultMap="UserMerchantMap">
+    select
+    <include refid="user_merchant_column_list" />
+    from epl_user u inner join epl_merchant m on u.merchent_id=m.id
+    where u.user_account = #{user_account,jdbcType=VARCHAR} and u.user_password = #{user_password,jdbcType=VARCHAR}
+  </select>
+
+  <!--按条件分页查询-->
+  <select id="selectMerchantUserListByCon" parameterType="java.util.Map" resultMap="UserMerchantMap">
+    SELECT m.id,m.merchant_name,u.user_account FROM epl_merchant m LEFT JOIN epl_user u ON m.id=u.merchent_id
+    <include refid="search_by_param"/>
+    ORDER BY m.modified_date DESC
+  </select>
+  <!--分页查询条件-->
+  <sql id="search_by_param">
+    <trim prefix="WHERE" prefixOverrides="AND|OR">
+      <if test="user_type != null and user_type != ''">
+        AND u.user_type=#{user_type,jdbcType=VARCHAR}
+      </if>
+      <if test="parent_id != null">
+        AND u.parent_id=#{parent_id,jdbcType=BIGINT}
+      </if>
+      <if test="status != null and status != ''">
+        AND u.status=#{status,jdbcType=VARCHAR}
+      </if>
+      /*
+        &lt;小于号;
+        &gt; 大于号;
+      */
+      <if test="beginTime != null">
+        AND DATE_FORMAT(u.created_date, '%Y-%m-%d %H:%i:%S') &gt;= DATE_FORMAT(#{beginTime,jdbcType=TIMESTAMP}, '%Y-%m-%d %H:%i:%S')
+      </if>
+      <if test="endTime != null">
+        AND DATE_FORMAT(u.created_date, '%Y-%m-%d %H:%i:%S') &lt;= DATE_FORMAT(#{endTime,jdbcType=TIMESTAMP}, '%Y-%m-%d %H:%i:%S')
+      </if>
+
+    </trim>
+  </sql>
+
+
+
+
+</mapper>
