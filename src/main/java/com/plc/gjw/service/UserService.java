@@ -3,6 +3,8 @@ package com.plc.gjw.service;
 import com.plc.gjw.domain.EplUser;
 import com.plc.gjw.domain.EplUserExample;
 
+import java.util.Map;
+
 /**
  * 系统用户类接口
  */
@@ -21,5 +23,11 @@ public interface UserService {
      * @return
      */
     int updateByExampleSelective(EplUser user, EplUserExample userExample);
+    /**
+     * 扣减操作ID
+     * @param user
+     * @return
+     */
+    int updateByExampleSelective(EplUser user,Map<String,Object> conMap);
 
 }

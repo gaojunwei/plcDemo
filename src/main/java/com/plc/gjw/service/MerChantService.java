@@ -2,8 +2,7 @@ package com.plc.gjw.service;
 
 import com.github.pagehelper.Page;
 import com.plc.gjw.common.controller.result.BasicResult;
-import com.plc.gjw.domain.EplMerchant;
-import com.plc.gjw.domain.EplUserMerchant;
+import com.plc.gjw.domain.*;
 import com.plc.gjw.domain.data.MerchantData;
 
 import java.util.Map;
@@ -45,4 +44,11 @@ public interface MerChantService {
      * @return
      */
     int updateByPrimaryKeySelective(EplMerchant eplMerchant);
+    /**
+     * 根据自定义条件修改用户信息
+     * @param eplMerchant
+     * @param eplMerchantExample
+     * @return
+     */
+    int updateByExampleSelective(EplMerchant eplMerchant, EplMerchantExample eplMerchantExample);
 }

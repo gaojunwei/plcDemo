@@ -9,6 +9,7 @@ import com.plc.gjw.common.enums.InnerErrorCode;
 import com.plc.gjw.common.enums.MerchantResultEnum;
 import com.plc.gjw.common.exception.AppException;
 import com.plc.gjw.common.utile.EncryptionUtils;
+import com.plc.gjw.dao.BasicMybatisDao;
 import com.plc.gjw.domain.*;
 import com.plc.gjw.domain.data.MerchantData;
 import com.plc.gjw.service.MerChantService;
@@ -26,6 +27,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -224,4 +226,23 @@ public class MerChantServiceImpl implements MerChantService {
         merchant.setOperatorId(merchantData.getCreateManId());
     }
 
+    /**
+     * 根据自定义条件修改用户信息
+     * @param eplMerchant
+     * @param eplMerchantExample
+     * @return
+     */
+    @Override
+    public int updateByExampleSelective(EplMerchant eplMerchant, EplMerchantExample eplMerchantExample) {
+        log.info("MerChantServiceImpl_updateByExampleSelective[自定义条件修改商户信息]_start user:{}", JSON.toJSONString(eplMerchant));
+        eplMerchant.setModifiedDate(new Date());
+
+        Map<String,Object> map = new HashMap<>();
+        map.put(BasicMybatisDao.UPDATE_RECORD,eplMerchant);
+        map.put(BasicMybatisDao.UPDATE_PARAMETER,eplMerchantExample);
+
+        int count = eplMerchantDao.updateByExampleSelective(map);
+        log.info("MerChantServiceImpl_updateByExampleSelective[自定义条件修改商户信息]_end count:{}",count);
+        return count;
+    }
 }
