@@ -41,7 +41,7 @@ public class TestServiceImp implements TestService {
             return result;
         }
         return ((TestServiceImp)AopContext.currentProxy()).justUpdate(userName,merchantName,reduce);
-        //return justUpdate(userName,merchantName);
+        //return justUpdate(userName,merchantName,reduce);
 
     }
     @Transactional(isolation = Isolation.REPEATABLE_READ, propagation = Propagation.REQUIRED)
