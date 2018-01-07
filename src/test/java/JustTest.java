@@ -11,7 +11,7 @@ import javax.annotation.Resource;
 
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(locations = {"/spring/applicationContext.xml","/spring-mvc.xml"})
+@ContextConfiguration(locations = {"/applicationContext.xml","/spring-mvc.xml"})
 public class JustTest {
 
     @Resource
@@ -20,24 +20,24 @@ public class JustTest {
     @Test
     public void test001(){
 
-        String userName = "娃哈哈2";
-        String merchantName = "快快快商户2";
-        BasicResult result = new BasicResult(false);
-        try {
-            result = testService.justTest(userName,merchantName,Long.valueOf(100));
-        }catch (Exception e){
-            if(e instanceof AppException)
-            {
-                result.setReturnCode(((AppException)e).getKey());
-                result.setReturnMessage(((AppException)e).getInfo());
-            }else{
-                result.setReturnCode("99999");
-                result.setReturnMessage("操作异常");
-                e.printStackTrace();
-            }
-        }
-
-        System.out.println("处理结果："+ JSON.toJSONString(result));
+//        String userName = "娃哈哈2";
+//        String merchantName = "快快快商户2";
+//        BasicResult result = new BasicResult(false);
+//        try {
+//            result = testService.justTest(userName,merchantName,Long.valueOf(100));
+//        }catch (Exception e){
+//            if(e instanceof AppException)
+//            {
+//                result.setReturnCode(((AppException)e).getKey());
+//                result.setReturnMessage(((AppException)e).getInfo());
+//            }else{
+//                result.setReturnCode("99999");
+//                result.setReturnMessage("操作异常");
+//                e.printStackTrace();
+//            }
+//        }
+//
+//        System.out.println("处理结果："+ JSON.toJSONString(result));
     }
 
 }

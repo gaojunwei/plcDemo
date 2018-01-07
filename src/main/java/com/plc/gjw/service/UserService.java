@@ -3,6 +3,8 @@ package com.plc.gjw.service;
 import com.plc.gjw.domain.EplUser;
 import com.plc.gjw.domain.EplUserExample;
 
+import java.util.Date;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -29,5 +31,6 @@ public interface UserService {
      * @return
      */
     int updateByExampleSelective(EplUser user,Map<String,Object> conMap);
+    List<EplUser> listUserByCon(Date startDate, Date endDate);
 
 }

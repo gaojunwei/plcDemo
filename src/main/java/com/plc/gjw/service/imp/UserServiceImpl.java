@@ -14,6 +14,7 @@ import org.springframework.stereotype.Component;
 import javax.annotation.Resource;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @Component("userService")
@@ -73,5 +74,18 @@ public class UserServiceImpl implements UserService {
         int count = eplUserDao.insertSelective(user);
         log.info("UserServiceImpl_insertUser[用户录入]_end count:{}",count);
         return count;
+    }
+
+    @Override
+    public List<EplUser> listUserByCon(Date startDate,Date endDate) {
+        log.info("UserServiceImpl_listUserByCon[根据条件查询用户列表]_start");
+        EplUserExample example = new EplUserExample();
+        EplUserExample.Criteria criteria = example.createCriteria();
+        criteria.andCreatedDateGreaterThan(startDate);
+        criteria.andCreatedDateLessThan(endDate);
+
+        List<EplUser> list = eplUserDao.selectByExample(example);
+        log.info("UserServiceImpl_listUserByCon[根据条件查询用户列表]_end count:{}",JSON.toJSONString(list));
+        return list;
     }
 }

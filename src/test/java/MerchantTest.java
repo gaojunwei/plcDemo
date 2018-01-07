@@ -3,7 +3,6 @@ import com.plc.gjw.common.controller.result.BasicResult;
 import com.plc.gjw.common.controller.result.PageResult;
 import com.plc.gjw.controller.MerchantController;
 import com.plc.gjw.domain.data.MerchantData;
-import com.plc.gjw.user.dao.EplUserDao;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -15,7 +14,7 @@ import java.math.BigDecimal;
 
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(locations = {"/spring/applicationContext.xml","/spring-mvc.xml"})
+@ContextConfiguration(locations = {"/applicationContext.xml","/spring-mvc.xml"})
 public class MerchantTest {
 
     @Resource
@@ -57,19 +56,19 @@ public class MerchantTest {
     //查询商户
     @Test
     public void test001(){
-        PageResult pageResult = merchantController.list(1,20);
-        System.out.println("处理结果："+ JSON.toJSONString(pageResult));
+//        PageResult pageResult = merchantController.list(1,20);
+//        System.out.println("处理结果："+ JSON.toJSONString(pageResult));
     }
     //添加商户
     @Test
     public void test002(){
-        BasicResult b = merchantController.save(merchantData);
-        System.out.println("处理结果："+ JSON.toJSONString(b));
+//        BasicResult b = merchantController.save(merchantData);
+//        System.out.println("处理结果："+ JSON.toJSONString(b));
     }
     //修改商户
     @Test
     public void test003(){
-        BasicResult b = merchantController.modify(merchantData);
-        System.out.println("处理结果："+ JSON.toJSONString(b));
+//        BasicResult b = merchantController.modify(merchantData);
+//        System.out.println("处理结果："+ JSON.toJSONString(b));
     }
 }

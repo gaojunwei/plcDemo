@@ -11,14 +11,10 @@ import com.plc.gjw.domain.EplUserMerchant;
 import com.plc.gjw.domain.data.MerchantData;
 import com.plc.gjw.service.MerChantService;
 import com.plc.gjw.service.UserService;
-import javafx.scene.input.DataFormat;
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import java.text.ParseException;
@@ -26,7 +22,6 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.zip.DataFormatException;
 
 @RestController
 @RequestMapping(value="/epl/merchant")
@@ -38,6 +33,14 @@ public class MerchantController {
     @Resource
     UserService userService;
 
+    @RequestMapping(value = "datetest")
+    public BasicResult dateParamTest(@RequestParam("date_str")String date)
+    {
+        BasicResult result = new BasicResult(false);
+        logger.info("date 值为："+date);
+        return result;
+    }
+
     /**
      * 分页查询商户列表信息查询
      *
@@ -45,7 +48,7 @@ public class MerchantController {
      * @param pageSize 每页数量
      * @return
      */
-    @RequestMapping(value = "listmerchant")
+    @RequestMapping(value = "listmerchant", method = RequestMethod.GET)
     public PageResult list(@RequestParam(required = false, defaultValue = "1") int pageNum, @RequestParam(required = false, defaultValue = "20") int pageSize) {
         PageResult result = new PageResult();
         logger.info("MerchantController_list[分页获取商户信息列表查询]_start ");
